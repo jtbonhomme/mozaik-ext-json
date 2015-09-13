@@ -29,10 +29,10 @@ var Data = React.createClass({
     render() {
         return (
             <div>
-                <div className="widget__header">
+                <div className="json__header">
                     {this.props.data.name}
                 </div>
-                <div className="widget__body">
+                <div className="json__body">
                     {this.props.data.value}
                 </div>
             </div>

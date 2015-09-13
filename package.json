@@ -1,6 +1,6 @@
 {
     "name": "mozaik-ext-json",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Mozaïk json extension",
     "engines": {
         "node": "0.10.x"
@@ -26,5 +26,10 @@
         "react": "^0.12.2",
         "react-tools": "^0.12.2",
         "reflux": "^0.2.5"
+    },
+    "browserify": {
+      "transform": [
+        "babelify"
+      ]
     }
 }
