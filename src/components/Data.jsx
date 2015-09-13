@@ -16,11 +16,11 @@ var Data = React.createClass({
 
     getApiRequest() {
         return {
-            this.props.data;
+            data: this.props.data
         };
     },
 
-    onApiData(view) {
+    onApiData(data) {
         this.setState({
             data: data
         });
