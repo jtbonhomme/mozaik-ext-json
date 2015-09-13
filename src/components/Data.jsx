@@ -2,7 +2,9 @@ var React            = require('react');
 var Reflux           = require('reflux');
 var ApiConsumerMixin = require('mozaik/browser').Mixin.ApiConsumer;
 
-var Data = React.createClass({
+export default React.createClass({
+    displayName: 'Data',
+
     mixins: [
         Reflux.ListenerMixin,
         ApiConsumerMixin
@@ -16,7 +18,10 @@ var Data = React.createClass({
 
     getApiRequest() {
         return {
-            data: this.props.data
+          id: 'json.data',
+          params: {
+            url: this.props.url
+          }
         };
     },
 
@@ -27,17 +32,26 @@ var Data = React.createClass({
     },
 
     render() {
+        var jsonName = "unknown", jsonValue = "unknown";
+        if (this.state.data) {
+            if (this.state.data.name){
+                jsonName = this.state.data.name;
+            }
+            if (this.state.data.value){
+                jsonValue = this.state.data.value;
+            }
+        }
+
         return (
             <div>
-                <div className="json__header">
-                    {this.props.data.name}
+                <div className="widget__header">
+                    <span className="widget__header__subject">{jsonName}</span>
+                    <i className="fa fa-table" />
                 </div>
-                <div className="json__body">
-                    {this.props.data.value}
+                <div className="widget__body">
+                    {jsonValue}
                 </div>
             </div>
         );
     }
 });
-
-module.exports = Data;

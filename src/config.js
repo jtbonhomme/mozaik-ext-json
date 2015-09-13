@@ -4,7 +4,7 @@ var config = convict({
     json: {
         url: {
             doc:     'The JSON file url.',
-            default: null,
+            default: 'foo',
             format:  String,
             env:    'JSON_FILE_URL'
         }
