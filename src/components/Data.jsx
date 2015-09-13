@@ -12,7 +12,8 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            data: null
+            title: null,
+            value: null
         };
     },
 
@@ -20,36 +21,55 @@ export default React.createClass({
         return {
           id: 'json.data',
           params: {
-            url: this.props.url
+            titleKey: this.props.titleKey,
+            valueKey: this.props.valueKey
           }
         };
     },
 
+    findProp(obj, prop, defval){
+        if (typeof defval == 'undefined') defval = null;
+        prop = prop.split('.');
+        for (var i = 0; i < prop.length; i++) {
+            if(typeof obj[prop[i]] == 'undefined')
+                return defval;
+            obj = obj[prop[i]];
+        }
+        return obj;
+    },
+
     onApiData(data) {
         this.setState({
-            data: data
+            title: this.findProp(data, this.props.title),
+            value: this.findProp(data, this.props.value),
+            unit: this.findProp(data, this.props.unit)
         });
     },
 
     render() {
-        var jsonName = "unknown", jsonValue = "unknown";
-        if (this.state.data) {
-            if (this.state.data.name){
-                jsonName = this.state.data.name;
-            }
-            if (this.state.data.value){
-                jsonValue = this.state.data.value;
-            }
+        var title = "unknown", value = "unknown", unit = null;
+        if (this.state.title){
+            title = this.state.title;
+        }
+        if (this.state.value){
+            value = this.state.value;
+        }
+        if (this.state.unit){
+            unit = this.state.unit;
         }
 
         return (
             <div>
                 <div className="widget__header">
-                    <span className="widget__header__subject">{jsonName}</span>
+                    <span className="widget__header__subject">
+                        {title}
+                    </span>
                     <i className="fa fa-table" />
                 </div>
-                <div className="widget__body">
-                    {jsonValue}
+                <div className="json__value">
+                    <span>
+                        {value} {unit}
+                    </span>
                 </div>
             </div>
         );

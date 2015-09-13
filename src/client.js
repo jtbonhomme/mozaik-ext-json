@@ -1,6 +1,5 @@
 import request from 'superagent-bluebird-promise';
 import config  from './config';
-import Promise from 'bluebird';
 import chalk   from 'chalk';
 
 /**
@@ -12,18 +11,17 @@ const client = function (mozaik) {
 
     const apiCalls = {
         data(params) {
-            let url = params.url;
-            let req   = request.get(url);
+            let url = config.get('json.url');
+            let req = request.get(url);
 
             mozaik.logger.info(chalk.yellow(`[json] calling ${ url }`));
 
             return req.promise()
-                .then(res => res.body)
+                .then(res => JSON.parse(res.text))
             ;
         }
     };
     return apiCalls;
 };
-
 
 export { client as default };
