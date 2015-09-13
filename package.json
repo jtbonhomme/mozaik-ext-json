@@ -1,9 +1,13 @@
 {
     "name": "mozaik-ext-json",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Mozaïk json extension",
     "engines": {
         "node": "0.10.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jtbonhomme/mozaik-ext-json.git"
     },
     "dependencies": {
         "bluebird": "^2.9.9",

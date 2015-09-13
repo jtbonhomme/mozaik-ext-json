@@ -15,7 +15,8 @@ var Data = React.createClass({
     },
 
     getApiRequest() {
-        return this.props.data;
+        return {
+            this.props.data;
         };
     },
 
