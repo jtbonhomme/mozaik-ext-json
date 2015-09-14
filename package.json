@@ -1,6 +1,6 @@
 {
   "name": "mozaik-ext-json",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Mozaïk json extension",
   "engines": {
     "node": "0.10.x"

@@ -9,14 +9,24 @@ const client = function (mozaik) {
 
     mozaik.loadApiConfig(config);
 
+    function buildApiRequest() {
+        let url     = config.get('json.url');
+        let headers = config.get('json.headers');
+        let req     = request.get(url);
+
+        headers.forEach(function(header){
+            req.set(header.name, header.value);
+        });
+        mozaik.logger.info(chalk.yellow(`[json] calling ${ url }`));
+
+        return req.promise();
+    }
+
     const apiCalls = {
         data(params) {
-            let url = config.get('json.url');
-            let req = request.get(url);
+            console.log("[data] params : " + JSON.stringify(params));
 
-            mozaik.logger.info(chalk.yellow(`[json] calling ${ url }`));
-
-            return req.promise()
+            return buildApiRequest()
                 .then(res => JSON.parse(res.text))
             ;
         }

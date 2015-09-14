@@ -13,7 +13,9 @@ export default React.createClass({
     getInitialState() {
         return {
             title: null,
-            value: null
+            value: null,
+            unit: null,
+            alter: null
         };
     },
 
@@ -21,8 +23,10 @@ export default React.createClass({
         return {
           id: 'json.data',
           params: {
-            titleKey: this.props.titleKey,
-            valueKey: this.props.valueKey
+            title: this.props.title,
+            value: this.props.value,
+            unit: this.props.unit,
+            alter: this.props.alter
           }
         };
     },
@@ -39,6 +43,11 @@ export default React.createClass({
     },
 
     onApiData(data) {
+        // Filter if defined
+        if (this.props.alter || true) {
+          var alter = eval("(" + this.props.alter + ")");
+          data = alter(data);
+        }
         this.setState({
             title: this.findProp(data, this.props.title),
             value: this.findProp(data, this.props.value),
