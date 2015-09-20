@@ -32,19 +32,27 @@ export default React.createClass({
     },
 
     findProp(obj, prop, defval){
-        if (typeof defval == 'undefined') defval = null;
-        prop = prop.split('.');
-        for (var i = 0; i < prop.length; i++) {
-            if(typeof obj[prop[i]] == 'undefined')
-                return defval;
-            obj = obj[prop[i]];
+        if (typeof defval === 'undefined') defval = null;
+        if (typeof prop !== 'undefined' && prop && prop.match(/\$\{.*\}/)) {
+            // ${key.prop.value} -> key.prop.value
+            prop = prop.split('${')[1].split('}')[0]
+            // key.prop.value -> [key, prop, value]
+            prop = prop.split('.');
+            for (var i = 0; i < prop.length; i++) {
+                if(typeof obj[prop[i]] == 'undefined')
+                    return defval;
+                obj = obj[prop[i]];
+            }
+            return obj;
         }
-        return obj;
+        else {
+            return prop;
+        }
     },
 
     onApiData(data) {
         // Filter if defined
-        if (this.props.alter || true) {
+        if (this.props.alter) {
           var alter = eval("(" + this.props.alter + ")");
           data = alter(data);
         }

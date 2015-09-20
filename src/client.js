@@ -24,8 +24,6 @@ const client = function (mozaik) {
 
     const apiCalls = {
         data(params) {
-            console.log("[data] params : " + JSON.stringify(params));
-
             return buildApiRequest()
                 .then(res => JSON.parse(res.text))
             ;
