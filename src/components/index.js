@@ -1,3 +1,5 @@
-module.exports = {
-    Data:               require('./Data.jsx')
-};
+import Data from './Data.jsx';
+
+export default {
+	Data: Data
+}
