@@ -12,13 +12,13 @@
   "dependencies": {
     "chalk": "^0.5.1",
     "convict": "^1.0.1",
-    "superagent-bluebird-promise": "^2.1.0"
+    "react-mixin": "3.0.4",
+    "superagent-bluebird-promise": "^3.0.0"
   },
   "main": "./src/components/index.js",
   "devDependencies": {
     "mozaik": "0.0.9-beta",
-    "react": "^0.12.2",
-    "react-tools": "^0.12.2",
+    "react": "^0.13.3",
     "reflux": "^0.2.5"
   },
   "browserify": {

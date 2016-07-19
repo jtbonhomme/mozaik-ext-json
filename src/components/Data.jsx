@@ -1,14 +1,16 @@
-var React            = require('react');
-var Reflux           = require('reflux');
-var ApiConsumerMixin = require('mozaik/browser').Mixin.ApiConsumer;
+import React, { Component, PropTypes } from 'react';
+import reactMixin                      from 'react-mixin';
+import { ListenerMixin }               from 'reflux';
+import Mozaik                          from 'mozaik/browser';
 
-export default React.createClass({
-    displayName: 'Data',
+//export default React.createClass(
 
-    mixins: [
-        Reflux.ListenerMixin,
-        ApiConsumerMixin
-    ],
+class Data extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { title: null, value: null, unit: null, alter: null };
+    }
 
     getInitialState() {
         return {
@@ -17,7 +19,7 @@ export default React.createClass({
             unit: null,
             alter: null
         };
-    },
+    }
 
     getApiRequest() {
         return {
@@ -29,7 +31,7 @@ export default React.createClass({
             alter: this.props.alter
           }
         };
-    },
+    }
 
     findProp(obj, prop, defval){
         if (typeof defval === 'undefined') defval = null;
@@ -48,7 +50,7 @@ export default React.createClass({
         else {
             return prop;
         }
-    },
+    }
 
     onApiData(data) {
         // Filter if defined
@@ -61,7 +63,7 @@ export default React.createClass({
             value: this.findProp(data, this.props.value),
             unit: this.findProp(data, this.props.unit)
         });
-    },
+    }
 
     render() {
         var title = "unknown", value = "unknown", unit = null;
@@ -91,4 +93,23 @@ export default React.createClass({
             </div>
         );
     }
-});
+}
+
+Data.displayName = 'Data';
+
+Data.propTypes = {
+    title: PropTypes.string.isRequired,
+    value: PropTypes.number,
+    unit:  PropTypes.string
+};
+
+Data.defaultProps = {
+    title: 'Mozaïk JSON widget',
+    value: 0,
+    unit:  ''
+};
+
+reactMixin(Data.prototype, ListenerMixin);
+reactMixin(Data.prototype, Mozaik.Mixin.ApiConsumer);
+
+export { Data as default };
