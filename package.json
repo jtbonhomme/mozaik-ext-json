@@ -13,7 +13,7 @@
     "chalk": "^0.5.1",
     "convict": "^1.0.1",
     "react-mixin": "3.0.4",
-    "superagent-bluebird-promise": "^3.0.0"
+    "superagent-bluebird-promise": "^4.1.0"
   },
   "main": "./src/components/index.js",
   "devDependencies": {
