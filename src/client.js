@@ -1,34 +1,71 @@
 const _ = require('lodash');
-const config = require('./config');
 const chalk = require('chalk');
+const Promise = require('bluebird');
+
+const readFileAsync = Promise.promisify(require('fs').readFile);
 
 const request = require('superagent');
 require('superagent-bluebird-promise');
+
+const cacheManager = require('cache-manager');
+const cacheStore = require('cache-manager-fs');
+const cacheOptions = {
+    maxsize: 1000 * 1000, // bytes, 1 mb
+    path: 'tmp/cache',
+    preventfill: false,
+    ttl: 60 * 60, // seconds, 1 hr
+};
+const cache = cacheManager.caching({store: cacheStore, options: cacheOptions});
 
 /**
  * @param {Mozaik} mozaik
  */
 const client = function (mozaik) {
-
-    mozaik.loadApiConfig(config);
-
-    function buildApiRequest() {
-        const url     = config.get('json.url');
-        const headers = config.get('json.headers');
-
-        mozaik.logger.info(chalk.yellow(`[json] calling ${ url }`));
-
-        return request.get(url).set(headers || {}).promise();
-    }
-
-    const apiCalls = {
+    return {
         data(params) {
-            return buildApiRequest()
-                .then(res => JSON.parse(res.text))
-            ;
+            const {path:pathToFile, dataPath} = params;
+
+            const cacheKey = `json-ext::${pathToFile || url}`;
+
+            return cache.wrap(cacheKey, function() {
+                mozaik.logger.info(chalk.yellow(`[json] fetching ${pathToFile || url}`));
+
+                return pathToFile
+                    ? getFSData(params)
+                    : getAPIData(params)
+                ;
+            }).then(jsonData => {
+                console.log({jsonData, dataPath});
+                return {
+                    value: _.get(jsonData, dataPath)
+                }
+            });
         }
     };
-    return apiCalls;
 };
 
 module.exports = client;
+
+function getFSData(params) {
+    const {path:pathToFile} = params;
+    return getJSONFromFile(pathToFile);
+}
+
+function getAPIData(params) {
+    const {url, headers={}} = params;
+
+    return request
+        .get(url)
+        .set(headers || {}).promise()
+        .then(res => _.get(res, 'body'))
+}
+
+function getJSONFromFile(pathToFile) {
+    return readFileAsync(pathToFile)
+        .then(data => safeJSONParse(data));
+}
+
+function safeJSONParse(data){
+    return _.attempt(JSON.parse.bind(null, data));
+}
+

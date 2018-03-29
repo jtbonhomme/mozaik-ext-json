@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import TableIcon                       from 'react-icons/lib/fa/table'
 
@@ -8,18 +9,21 @@ import './Data.css';
 class Data extends Component {
     static getApiRequest(props) {
         return {
-          id: 'json.data',
+          id: `json.data.${props.title}`,
           params: {
+            dataPath: props.dataPath,
+            path: props.path,
             title: props.title,
-            value: props.value,
             unit: props.unit,
-            alter: props.alter
+            url: props.url,
+            value: props.value,
           }
         };
     }
 
     render() {
-        const {title, unit, value} = this.props;
+        const {title, unit} = this.props;
+        const value = _.get(this.props, 'apiData.value');
 
         return (
             <Widget>
@@ -39,13 +43,17 @@ class Data extends Component {
 Data.displayName = 'Data';
 
 Data.propTypes = {
+    dataPath: PropTypes.string.isRequired,
+    path:  PropTypes.string,
     title: PropTypes.string.isRequired,
+    unit:  PropTypes.string,
+    url:   PropTypes.string,
     value: PropTypes.string,
-    unit:  PropTypes.string
 };
 
 Data.defaultProps = {
-    title: 'Mozaïk JSON widget',
+    dataPath: '*',
+    title: 'Mozaïk JSON Widget',
     value: 0,
     unit:  ''
 };
