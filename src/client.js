@@ -35,7 +35,6 @@ const client = function (mozaik) {
                     : getAPIData(params)
                 ;
             }).then(jsonData => {
-                console.log({jsonData, dataPath});
                 return {
                     value: _.get(jsonData, dataPath)
                 }
