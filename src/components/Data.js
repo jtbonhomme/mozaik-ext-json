@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
-import TableIcon                       from 'react-icons/lib/fa/table'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import TableIcon from 'react-icons/lib/fa/table'
 
-import { TrapApiError, Widget, WidgetHeader, WidgetBody } from '@mozaik/ui'
+import { Widget, WidgetHeader, WidgetBody } from '@mozaik/ui'
 
 import './Data.css';
 

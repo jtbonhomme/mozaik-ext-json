@@ -23,16 +23,17 @@ const cache = cacheManager.caching({store: cacheStore, options: cacheOptions});
 const client = function (mozaik) {
     return {
         data(params) {
-            const {path:pathToFile, dataPath} = params;
+            const {path:pathToFile, dataPath, url} = params;
 
-            const cacheKey = `json-ext::${pathToFile || url}`;
+            const cacheKey = `mozaik-ext=json::${pathToFile || url}`;
 
+            // TODO: make TTL configurable
             return cache.wrap(cacheKey, function() {
                 mozaik.logger.info(chalk.yellow(`[json] fetching ${pathToFile || url}`));
 
                 return pathToFile
                     ? getFSData(params)
-                    : getAPIData(params)
+                    : getAPIData(params);
                 ;
             }).then(jsonData => {
                 return {
