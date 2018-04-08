@@ -25,7 +25,7 @@ const client = function (mozaik) {
         data(params) {
             const {path:pathToFile, dataPath, url} = params;
 
-            const cacheKey = `mozaik-ext=json::${pathToFile || url}`;
+            const cacheKey = `mozaik-ext-json::${pathToFile || url}`;
 
             // TODO: make TTL configurable
             return cache.wrap(cacheKey, function() {
