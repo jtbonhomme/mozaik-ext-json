@@ -27,6 +27,7 @@ class Data extends Component {
         return {
           id: `json.data.${props.title}`,
           params: {
+            cacheOptions: props.cacheOptions,
             dataPath: props.dataPath,
             path: props.path,
             title: props.title,
