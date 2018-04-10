@@ -60,6 +60,7 @@ class Data extends Component {
 Data.displayName = 'Data';
 
 Data.propTypes = {
+    cacheOptions: PropTypes.object,
     dataPath: PropTypes.string.isRequired,
     path:  PropTypes.string,
     title: PropTypes.string.isRequired,
