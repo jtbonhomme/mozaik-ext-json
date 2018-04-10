@@ -5,7 +5,22 @@ import TableIcon from 'react-icons/lib/fa/table'
 
 import { Widget, WidgetHeader, WidgetBody } from '@mozaik/ui'
 
-import './Data.css';
+const styles = {
+  value: {
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    flex: 1,
+    textAlign: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    marginTop: '15px',
+    fontSize: '30px',
+    lineHeight: '30px',
+    display: 'block',
+    width: '100%',
+    marginBottom: '9px',
+  },
+};
 
 class Data extends Component {
     static getApiRequest(props) {
@@ -30,7 +45,7 @@ class Data extends Component {
             <Widget>
                 <WidgetHeader title={title} icon={TableIcon} />
                 <WidgetBody>
-                    <div className="json__value">
+                    <div style={styles.value}>
                         <span>
                             {value} {unit}
                         </span>
