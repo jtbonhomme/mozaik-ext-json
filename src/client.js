@@ -21,8 +21,7 @@ const client = mozaik => ({
         const {cacheOptions, path:pathToFile, dataPath, url} = params;
 
         const cacheKey = `mozaik-ext-json::${pathToFile || url}`;
-console.log({cacheKey, cacheOptions});
-        // TODO: make TTL configurable
+
         return cache.wrap(cacheKey, function() {
             mozaik.logger.info(chalk.yellow(`[json] fetching ${pathToFile || url}`));
 
