@@ -1,5 +1,5 @@
-import Data from './Data.jsx';
+import Data from './Data';
 
 export default {
-	Data: Data
-}
+    Data
+};

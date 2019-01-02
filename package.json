@@ -10,16 +10,26 @@
     "url": "https://github.com/jtbonhomme/mozaik-ext-json.git"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "cache-manager": "^2.9.0",
     "chalk": "^0.5.1",
     "convict": "^1.0.1",
-    "react-mixin": "3.0.4",
-    "superagent-bluebird-promise": "^4.1.0"
+    "lodash": "^4.17.5",
+    "react-icons": "^2.2.5",
+    "superagent": "^3.8.2",
+    "superagent-bluebird-promise": "^4.2.0"
   },
   "main": "./src/components/index.js",
   "devDependencies": {
-    "mozaik": "0.0.9-beta",
-    "react": "^0.13.3",
-    "reflux": "^0.2.5"
+    "@mozaik/ui": "^2.0.0-alpha.11",
+    "prop-types": "^15.6.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "peerDependencies": {
+    "@mozaik/ui": "^2.0.0-alpha.11",
+    "prop-types": "^15.6.1",
+    "react": "^15.6.1"
   },
   "browserify": {
     "transform": [
